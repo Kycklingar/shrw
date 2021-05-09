@@ -54,7 +54,7 @@ func walkPattern(node *html.Node, i int, m ...Matcher) *html.Node {
 	}
 
 	for c := node.FirstChild; c != nil; c = c.NextSibling {
-		if n := WalkPattern(c, i, m...); n != nil {
+		if n := walkPattern(c, i, m...); n != nil {
 			return n
 		}
 	}

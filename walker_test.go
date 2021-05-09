@@ -38,7 +38,7 @@ func TestWalk(t *testing.T) {
 		t.Fatal(err)
 	}
 
-	findme := Walk(n, ClassAll("findme"))
+	findme := Walk(n, ClassFull("findme"))
 	if findme == nil {
 		t.Fatal("findme is nil")
 	}
@@ -63,7 +63,7 @@ func TestWalk(t *testing.T) {
 		t.Fatal("findText is nil")
 	}
 
-	findpattern := WalkPattern(n, 0, Tag("div"), Tag("div"), Tag("a"))
+	findpattern := WalkPattern(n, Tag("div"), Tag("div"), Tag("a"))
 	if findpattern == nil {
 		t.Fatal("pattern is nil")
 	}
@@ -72,7 +72,7 @@ func TestWalk(t *testing.T) {
 		t.Fatal("findpattern data incorrect. Expected: Hello, Got: ", findpattern.FirstChild.Data)
 	}
 
-	findtextblock := WalkPattern(n, 0, Tag("span"), Tag("div"))
+	findtextblock := WalkPattern(n, Tag("span"), Tag("div"))
 	if findtextblock == nil {
 		t.Fatal("findtextblock is nil")
 	}

@@ -53,7 +53,7 @@ func (m Tag) Match(node *html.Node) *html.Node {
 }
 
 func (m Text) Match(node *html.Node) *html.Node {
-	if node.Type == html.TextNode && string.TrimSpace(node.Data) == string(m) {
+	if node.Type == html.TextNode && strings.TrimSpace(node.Data) == string(m) {
 		return node
 	}
 
