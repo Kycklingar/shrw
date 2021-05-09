@@ -38,9 +38,12 @@ func WalkAll(ch chan *html.Node, node *html.Node, m Matcher) {
 	close(ch)
 }
 
-// Get first node matching the m pattern
-// Will return the last node of the pattern
-func WalkPattern(node *html.Node, i int, m ...Matcher) *html.Node {
+// Get first grandchild node matching the m pattern
+func WalkPattern(node *html.Node, m ...Matcher) *html.Node {
+	return walkPattern(node, 0, m...)
+}
+
+func walkPattern(node *html.Node, i int, m ...Matcher) *html.Node {
 	if n := m[i].Match(node); n != nil {
 		i++
 		if i >= len(m) {
@@ -57,10 +60,10 @@ func WalkPattern(node *html.Node, i int, m ...Matcher) *html.Node {
 	}
 
 	return nil
+
 }
 
-// Get all nodes matching the m pattern
-// Will return the last node of the pattern
+// Get all grandchild nodes matching the m pattern
 func WalkPatternAll(ch chan *html.Node, node *html.Node, m ...Matcher) {
 	var f func(*html.Node, int, ...Matcher)
 	f = func(node *html.Node, i int, m ...Matcher) {

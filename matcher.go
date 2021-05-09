@@ -7,16 +7,19 @@ import (
 )
 
 type Matcher interface {
+	// Match returns the node if it matches
+	// it will otherwise return nil
 	Match(*html.Node) *html.Node
 }
 
+// Implements the matcher interface
 type (
-	Id        string
-	Class     string
-	ClassFull string
-	Tag       string
-	Text      string
-	TextTrim  string
+	Id         string
+	Class      string // "one" or "two" will match class="one two"
+	ClassFull  string // only "one two" will match class="one two"
+	Tag        string
+	Text       string
+	TextNoTrim string
 )
 
 func (m Id) Match(node *html.Node) *html.Node {
@@ -50,15 +53,15 @@ func (m Tag) Match(node *html.Node) *html.Node {
 }
 
 func (m Text) Match(node *html.Node) *html.Node {
-	if node.Type == html.TextNode && node.Data == string(m) {
+	if node.Type == html.TextNode && string.TrimSpace(node.Data) == string(m) {
 		return node
 	}
 
 	return nil
 }
 
-func (m TextTrim) Match(node *html.Node) *html.Node {
-	if node.Type == html.TextNode && string.TrimSpace(node.Data) == string(m) {
+func (m TextNoTrim) Match(node *html.Node) *html.Node {
+	if node.Type == html.TextNode && node.Data == string(m) {
 		return node
 	}
 
